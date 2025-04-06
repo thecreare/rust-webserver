@@ -25,7 +25,7 @@ async fn main() {
         .route("/md_test", get(routes::md_test))
         .fallback(handler_404);
     // Define the address for the server
-    let addr = std::net::SocketAddr::from(([127, 0, 0, 1], 80));
+    let addr = std::net::SocketAddr::from(([127, 0, 0, 1], 8001));
 
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     tracing::info!("listening on {}", listener.local_addr().unwrap());
