@@ -1,8 +1,8 @@
 use std::path::PathBuf;
 
-use axum::{body::Body, response::IntoResponse, extract};
+use axum::{body::Body, extract, response::IntoResponse};
 use axum_template::RenderHtml;
-use hyper::header;
+use hyper::{header, StatusCode};
 use serde::Serialize;
 use tokio_util::io::ReaderStream;
 
@@ -49,4 +49,10 @@ pub async fn get_file_endpoint(
     ];
 
     Ok((headers, body).into_response())
+}
+
+#[derive(Debug, Serialize)]
+struct NotFound {}
+pub async fn handler_404(engine: AppEngine) -> impl IntoResponse {
+    (StatusCode::NOT_FOUND, RenderHtml("404.html", engine, NotFound {}))
 }

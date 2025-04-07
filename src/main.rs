@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 use axum::{
-    extract::FromRef, http::StatusCode, response::{Html, IntoResponse}, routing::get, Router
+    extract::FromRef, routing::get, Router
 };
 
 use axum_template::engine::Engine;
@@ -50,7 +50,7 @@ async fn main() {
         .route("/blog/{page}", get(routes::blog))
         // .route_service("/", ServeFile::new("assets/index.html"))
         .route("/assets/{*asset}", get(routes::get_file_endpoint))
-        .fallback(handler_404)
+        .fallback(routes::handler_404)
         // Create the application state
         .with_state(AppState {
             engine: Engine::from(jinja),
@@ -65,8 +65,4 @@ async fn main() {
     axum::serve(listener, app.layer(TraceLayer::new_for_http()))
         .await
         .unwrap();
-}
-
-async fn handler_404() -> impl IntoResponse {
-    (StatusCode::NOT_FOUND, Html("<img src=\"https://http.cat/404\" alt=\"http cat 404\"></img>"))
 }
