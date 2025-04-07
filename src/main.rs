@@ -28,7 +28,7 @@ async fn main() {
     let addr = std::net::SocketAddr::from(([127, 0, 0, 1], 8001));
 
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
-    tracing::info!("listening on {}", listener.local_addr().unwrap());
+    tracing::info!("listening on http://{}", listener.local_addr().unwrap());
     // Run the Axum server
     axum::serve(listener, app.layer(TraceLayer::new_for_http()))
         .await
