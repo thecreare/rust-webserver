@@ -21,7 +21,7 @@ async fn main() {
     // Build the Axum application
     let app = Router::new()
         .route_service("/", ServeFile::new("assets/index.html"))
-        .route("/images/{image}", get(routes::get_image))
+        .route("/assets/{*asset}", get(routes::get_file))
         .route("/md_test", get(routes::md_test))
         .fallback(handler_404);
     // Define the address for the server

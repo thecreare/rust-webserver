@@ -10,11 +10,11 @@ pub async fn md_test() -> impl IntoResponse {
     util::md_file_to_html(std::path::Path::new("assets/blogtest.md")).await
 }
 
-pub async fn get_image(
-    axum::extract::Path(image_name): axum::extract::Path<String>
+pub async fn get_file(
+    axum::extract::Path(file_name): axum::extract::Path<String>
 ) -> impl IntoResponse {
-    let mut path = PathBuf::from("assets/images");
-    path.push(&image_name);
+    let mut path = PathBuf::from("assets");
+    path.push(&file_name);
     let filename = match path.file_name() {
         Some(name) => name,
         None => return Err((StatusCode::BAD_REQUEST, "File name couldn't be determined".to_string()))
