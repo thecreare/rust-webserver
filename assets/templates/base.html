@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        {% block head %}
+        <title>creare's website</title>
+        <meta content="thecreare.dev" property="og:title" />
+        <meta content="Location of creare's blog, projects, portfolio, and other shenanigans :3" property="og:description" />
+        <!-- <meta content="https://embed.com/this-is-the-site-url" property="og:url" /> -->
+        <!-- <meta content="https://embed.com/embedimage.png" property="og:image" /> -->
+        <meta content="#4e078c" data-react-helmet="true" name="theme-color" />
+
+        <link rel="stylesheet" href="/assets/css/base.css">
+        <link rel="stylesheet" href="/assets/css/topnav.css">
+        {% endblock %}
+
+        <!-- The silly refresh script :3 -->
+        <!-- <script> location.reload(); </script> -->
+    </head>
+    <body>
+        {% block body %}
+        <div class="topnav">
+            <a class="active" href="/">thecreare.dev</a>
+            <a href="/blog/blogtest">Test</a>
+        </div>
+        {% endblock %}
+    </body>
+    <footer>
+        {% block footer %}
+        woah look! A footer!
+        {% endblock %}
+    </footer>
+</html>

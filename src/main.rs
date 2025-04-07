@@ -1,11 +1,25 @@
+use std::path::PathBuf;
+
 use axum::{
-    http::StatusCode, response::{Html, IntoResponse}, routing::get, Router
+    extract::FromRef, http::StatusCode, response::{Html, IntoResponse}, routing::get, Router
 };
 
-use tower_http::{services::ServeFile, trace::TraceLayer};
+use axum_template::engine::Engine;
+use minijinja::{Environment, path_loader};
+use minijinja_autoreload::AutoReloader;
+use tower_http::trace::TraceLayer;
 
 mod routes;
 mod util;
+
+type AppEngine = Engine<AutoReloader>;
+
+// Application shared state
+#[derive(Clone, FromRef)]
+struct AppState {
+    engine: AppEngine,
+}
+
 
 #[tokio::main]
 async fn main() {
@@ -18,17 +32,35 @@ async fn main() {
     )
     .unwrap();
 
+    // Set up the `minijinja` engine with the same route paths as the Axum router
+    let jinja = AutoReloader::new(move |notifier| {
+        let template_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("assets")
+            .join("templates");
+        let mut env = Environment::new();
+        env.set_loader(path_loader(&template_path));
+        notifier.set_fast_reload(true);
+        notifier.watch_path(&template_path, true);
+        Ok(env)
+    });
+
     // Build the Axum application
     let app = Router::new()
-        .route_service("/", ServeFile::new("assets/index.html"))
-        .route("/assets/{*asset}", get(routes::get_file))
-        .route("/md_test", get(routes::md_test))
-        .fallback(handler_404);
-    // Define the address for the server
-    let addr = std::net::SocketAddr::from(([127, 0, 0, 1], 8001));
+        .route("/", get(routes::index))
+        .route("/blog/{page}", get(routes::blog))
+        // .route_service("/", ServeFile::new("assets/index.html"))
+        .route("/assets/{*asset}", get(routes::get_file_endpoint))
+        .fallback(handler_404)
+        // Create the application state
+        .with_state(AppState {
+            engine: Engine::from(jinja),
+        });
 
+    // Start the TCP listener on addr
+    let addr = std::net::SocketAddr::from(([127, 0, 0, 1], 8001));
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     tracing::info!("listening on http://{}", listener.local_addr().unwrap());
+
     // Run the Axum server
     axum::serve(listener, app.layer(TraceLayer::new_for_http()))
         .await

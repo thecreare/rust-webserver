@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/assets/css/blog.css">
+{% endblock %}
+
+{% block body %}
+    {{ super() }}
+    <article class="post">
+        <div class="content">{{ markdown | safe }}</div>
+    </article>
+{% endblock %}
