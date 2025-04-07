@@ -12,4 +12,4 @@ i wonder what i should put here
 
 You can find the source of this project on [github](https://github.com/thecreare/rust-webserver)
 
-![Evolve 3D wizard creature with chat bubble "I cast spell upon you!"](../images/e3d/memes/spell.png "get spelled")
+![Evolve 3D wizard creature with chat bubble "I cast spell upon you!"](assets/images/e3d/memes/spell.png "get spelled")
