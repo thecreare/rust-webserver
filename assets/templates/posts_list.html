@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+    {{ super() }}
+    <ul>
+        {% for post in posts -%}
+        <li>
+            <a href="/blog/{{ post.path }}">{{ post.meta.title }}</a>
+        </li>
+        {%- endfor %}
+    </ul>
+{% endblock %}
