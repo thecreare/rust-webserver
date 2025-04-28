@@ -1,9 +1,19 @@
 html, body {
     margin: 0;
-    /* height: 100%; */
-    /* background-color: black; */
+    background-color: #181a1b;
     font-family: monospace;
+
+    color: #e8e6e3;
 }
+
+ul {
+    list-style-type: "⇒ "
+}
+
+a:link { color: #a8a6a4; }
+a:visited { color: #a8a6a4; }
+a:hover { color: #bbb }
+a:link:active, :visited:active { color: #ddd; }
 
 .content {
     margin: 20px;
