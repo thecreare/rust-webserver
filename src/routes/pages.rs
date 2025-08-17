@@ -92,11 +92,10 @@ pub async fn find_page(
             
             if dir_path.is_dir() && dir_path.with_extension("").ends_with(searching_name) {
                 return Ok(dir_path);
-            }
-            
-            let dir_extension = dir_path.extension().ok_or("Invalid path")?;
-            if dir_path.file_stem() == Some(searching_name) && dir_extension != "toml" {
-                return Ok(path.with_extension(dir_extension));
+            } else if let Some(dir_extension) = dir_path.extension() {
+                if dir_path.file_stem() == Some(searching_name) && dir_extension != "toml" {
+                    return Ok(path.with_extension(dir_extension));
+                }
             }
         } else {
             return Err("No matching page found".into());
