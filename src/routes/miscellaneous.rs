@@ -6,25 +6,7 @@ use hyper::{header, StatusCode};
 use serde::Serialize;
 use tokio_util::io::ReaderStream;
 
-use crate::{util::{md_to_string, open_file}, AppEngine};
-
-#[derive(Debug, Serialize)]
-struct Index {
-    markdown: String,
-}
-
-pub async fn index(
-    engine: AppEngine,
-) -> impl IntoResponse {
-    let markdown = match md_to_string(std::path::Path::new("assets/markdown/home.md")).await {
-        Ok(v) => v,
-        Err(e) => return Err(e),
-    };
-
-    let page = Index { markdown };
-
-    Ok(RenderHtml("plain_markdown_page.html", engine, page))
-}
+use crate::{util::open_file, AppEngine};
 
 pub async fn get_file_endpoint(
     extract::Path(file_name): extract::Path<String>

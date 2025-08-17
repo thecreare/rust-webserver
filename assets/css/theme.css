@@ -1,0 +1,6 @@
+:root {
+    --color-primary: #925eff;
+    --color-primary-darker: hsl(from var(--color-primary) h s calc(l - 5));
+    --color-primary-lighter: hsl(from var(--color-primary) h s calc(l + 5));
+    --color-background-grid: hsla(from var(--color-primary) h s l / 10%);
+}

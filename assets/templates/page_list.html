@@ -3,9 +3,9 @@
 {% block body %}
     {{ super() }}
     <ul>
-        {% for post in posts -%}
+        {% for post in pages -%}
         <li>
-            <a href="/blog/{{ post.path }}">{{ post.meta.title }}</a>
+            <a href="{{ post.path }}">{{ post.meta.title }}</a>
         </li>
         {%- endfor %}
     </ul>

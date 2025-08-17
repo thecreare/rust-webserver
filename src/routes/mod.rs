@@ -1,5 +1,5 @@
 mod miscellaneous;
-mod blog;
+mod pages;
 
 pub use miscellaneous::*;
-pub use blog::{blog, list_posts};
+pub use pages::{load_page, load_indexmd};

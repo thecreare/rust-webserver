@@ -1,14 +1,13 @@
 /* Add a black background color to the top navigation */
 .topnav {
-    background-color: #111;
+    position: relative;
+    background-color: #080808;
     overflow: hidden;
+    text-align: center;
 }
 
 /* Style the links inside the navigation bar */
 .topnav a {
-    float: left;
-    color: #5500ff;
-    text-align: center;
     padding: 8px 16px;
     text-decoration: none;
     font-size: 16px;
@@ -16,7 +15,15 @@
 
 /* Change the color of links on hover */
 .topnav a:hover {
-    background-color: #222;
-    color: #8446ff;
+    background-color: #111;
     text-decoration-line: underline;
+}
+
+.topnav a:not(.home_button) {
+    display: inline-block;  
+}
+
+.home_button {
+    position: absolute;
+    left: 0px
 }

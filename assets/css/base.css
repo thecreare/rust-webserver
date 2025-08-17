@@ -4,17 +4,27 @@ html, body {
     font-family: monospace;
 
     color: #e8e6e3;
+
+    background-image: linear-gradient(var(--color-background-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--color-background-grid) 1px, transparent 1px);
+    min-height: 100%;
+    background-size: 50px 50px;
 }
 
 ul {
     list-style-type: "⇒ "
 }
 
-a:link { color: #a8a6a4; }
-a:visited { color: #a8a6a4; }
-a:hover { color: #bbb }
-a:link:active, :visited:active { color: #ddd; }
+a:link, a:visited { color: var(--color-primary); }
+a:hover { color: var(--color-primary-lighter); }
+a:link:active, :visited:active { color: var(--color-primary-darker); }
 
 .content {
     margin: 20px;
+}
+
+code {
+    font-family: monospace;
+    background: #181a1b;
+    border-radius: 4px;
 }

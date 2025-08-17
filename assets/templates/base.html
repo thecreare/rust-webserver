@@ -12,8 +12,18 @@
 
         <link rel="icon" href="/assets/images/icon.png">
 
+        <!-- Website is  -->
+        <meta name="color-scheme" content="dark light">
+        <link rel="stylesheet" href="/assets/css/theme.css">
         <link rel="stylesheet" href="/assets/css/base.css">
         <link rel="stylesheet" href="/assets/css/topnav.css">
+
+        <!-- Syntax Highlighting by highlightjs.org -->
+        <!-- Probably fineeeee, depending on a library like this never goes wrong, right? -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+        
         {% endblock %}
 
         <!-- The silly refresh script :3 -->
@@ -22,14 +32,17 @@
     <body>
         {% block body %}
         <div class="topnav">
-            <a href="/">Info</a>
-            <a href="/blog">Posts</a>
+            <a href="/" class="home_button">=^･ω･^=</a>
+            <a href="/posts">Posts</a>
+            <a href="/projects">Projects</a>
+            <a href="/things">Cool Things</a>
         </div>
         {% endblock %}
     </body>
     <footer>
         {% block footer %}
-        woah look! A footer!
+        <hr>
+        <a href="https://github.com/thecreare/rust-webserver">sourcecode</a> on github :3
         {% endblock %}
     </footer>
 </html>
