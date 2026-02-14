@@ -1,10 +1,11 @@
 use std::{ffi::OsString, path::{Path, PathBuf}};
 
-use axum::{body::Body, extract, response::{IntoResponse, Response}};
+use axum::{body::Body, response::IntoResponse};
 use axum_template::RenderHtml;
-use hyper::StatusCode;
+use hyper::{StatusCode, header};
 use serde::{Deserialize, Serialize};
-use tokio::{fs, io::AsyncReadExt};
+use tokio::fs;
+use tokio_util::io::ReaderStream;
 use toml::value::Datetime;
 use tracing::error;
 
@@ -81,7 +82,7 @@ async fn enumerate_pages(
 }
 
 /// Match a query like `projects/evolve-3d` to an actual file or directory
-pub async fn find_page(
+async fn find_page(
     path: &PathBuf,
 ) -> Result<PathBuf, Box<dyn std::error::Error + 'static>> {
     let searching_name = path.file_stem().ok_or("Invalid path")?;
@@ -103,19 +104,23 @@ pub async fn find_page(
     }
 }
 
-pub async fn load_page(
-    engine: AppEngine,
-    extract::Path(path_name): extract::Path<String>,
-) -> impl IntoResponse {
-    let mut path = PathBuf::from("pages");
+pub async fn file_to_response(engine: AppEngine, root_name: String, path_name: String) -> impl IntoResponse {
+    let mut path = PathBuf::from(root_name);
+    let base_path = path.canonicalize().map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("{:?}", e)))?;
     path.push(&path_name);
-
+    
     // Find matching file
     path = match find_page(&path).await {
         Ok(path) => path,
         Err(e) => return Err((StatusCode::NOT_FOUND, format!("{:?}", e))),
     };
     
+    // Verify path is safe
+    let complete_path = path.canonicalize().map_err(|e| (StatusCode::INTERNAL_SERVER_ERROR, format!("{:?}", e)))?;
+    if !complete_path.starts_with(base_path) {
+        return Err((StatusCode::BAD_REQUEST, format!("no shenanigans for you")));
+    }
+
     // Handle directories of pages
     if path.is_dir() {
         let post_list = enumerate_pages(path).await;
@@ -126,7 +131,7 @@ pub async fn load_page(
     }
 
     // Open file
-    let (mut file, _content_type, _filename) = match open_file(&path).await {
+    let (file, content_type, filename) = match open_file(&path).await {
         Ok(v) => v,
         Err(e) => return Err(e),
     };
@@ -138,27 +143,10 @@ pub async fn load_page(
         return Ok(RenderHtml("page.html", engine, post).into_response());
     }
 
-    // Return the file contents
-    let mut content = String::new();
-    match file.read_to_string(&mut content).await {
-        Err(err) => return Err((StatusCode::INTERNAL_SERVER_ERROR, format!("Failed to read file: {}", err))),
-        Ok(_) => (),
-    }
-    Ok(Response::builder()
-        .status(StatusCode::OK)
-        .body(Body::from(content))
-        .unwrap())
-}
-
-pub async fn load_indexmd(
-    engine: AppEngine,
-) -> impl IntoResponse {
-    let markdown = match md_to_string(std::path::Path::new("pages/index.md")).await {
-        Ok(v) => v,
-        Err(e) => return Err(e),
-    };
-
-    let page = MarkdownPage { markdown };
-
-    Ok(RenderHtml("page.html", engine, page))
+    // Otherwise
+    let headers = [
+        (header::CONTENT_TYPE, content_type),
+        (header::CONTENT_DISPOSITION, &format!("attachment; filename=\"{:?}\"", filename)),
+    ];
+    Ok((headers, Body::from_stream(ReaderStream::new(file))).into_response())
 }

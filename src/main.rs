@@ -46,8 +46,8 @@ async fn main() {
 
     // Build the Axum application
     let app = Router::new()
-        .route("/", get(routes::load_indexmd))
-        .route("/assets/{*asset}", get(routes::get_file_endpoint))
+        .route("/", get(routes::load_index_page))
+        .route("/assets/{*asset}", get(routes::load_asset))
         .route("/{*page}", get(routes::load_page))
         .fallback(routes::handler_404)
         // Create the application state
