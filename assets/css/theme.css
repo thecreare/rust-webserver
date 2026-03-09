@@ -3,4 +3,6 @@
     --color-primary-darker: hsl(from var(--color-primary) h s calc(l - 5));
     --color-primary-lighter: hsl(from var(--color-primary) h s calc(l + 5));
     --color-background-grid: hsla(from var(--color-primary) h s l / 10%);
+    --color-card-background: #111;
+    --color-text: #e8e6e3;
 }

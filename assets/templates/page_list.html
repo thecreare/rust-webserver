@@ -1,12 +1,21 @@
 {% extends "base.html" %}
 
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/assets/css/page_list.css">
+{% endblock %}
+
 {% block body %}
     {{ super() }}
-    <ul>
+    <div class="cards">
         {% for post in pages -%}
-        <li>
-            <a href="{{ post.path }}">{{ post.meta.title }}</a>
-        </li>
+        <a href="{{ post.path }}" class="card">
+            <div class="banner" style="background-image: url('{{ post.meta.banner }}');"></div>
+            <article>
+                <h1>{{ post.meta.title }}</h1>
+                <p>{{ post.meta.short_description }}</p>
+            </article>
+        </a>
         {%- endfor %}
-    </ul>
+    </div>
 {% endblock %}

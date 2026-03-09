@@ -18,9 +18,10 @@ struct MarkdownPage {
 
 #[derive(Debug, Deserialize, Serialize)]
 struct TomlMetadata {
-    title: String,
-    date: Datetime,
-    short_description: String,
+    title: Option<String>,
+    date: Option<Datetime>,
+    short_description: Option<String>,
+    banner: Option<String>,
 }
 
 #[derive(Debug, Serialize)]
