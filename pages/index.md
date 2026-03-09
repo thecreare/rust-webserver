@@ -1,14 +1,19 @@
 # =^･ω･^=
 
-woaw look a home page\
-I am hosting this website on my raspberry pi with rust :3
+woaw look a home page!\
+I am hosting [this website](projects/website) on my raspberry pi with a custom backend written rust :3\
+Realistically I should've used jekyll or done something with typescript but this was a fun experiment
 
-## About Me and Stuffs
+This website is very much a work in progress so please don't mind the poorly worded stuff, i'm not very good at writing things
 
-Hai I'm creare and I really like making games, I started like 9 years ago on khan academy! I have the terrible curse of never quite finishing most of my projects...
-I've made [Evolve 3D](projects/evolve-3d) which averages 200 concurrent players and has been played about 6 million times :D
+## About Me
 
-## the links
+Hii I'm creare and I really like making games, I started ~10 years ago on khan academy! I have the terrible curse of never quite finishing most of my [projects](projects)...
+I've made [Evolve 3D](projects/evolve-3d) which has been played about 9 million times :D!
+
+I'm not sure what more I should write... Heres [a link to my ""portfolio""](portfolio) for an attempt at describing what I can do
+
+## links
 
 - Github [thecreare](https://github.com/thecreare)
 - Discord [\_creare\_](https://discordapp.com/users/468384658653184040)
