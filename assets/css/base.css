@@ -16,9 +16,23 @@ ul {
     list-style-type: "⇒ "
 }
 
-a:link, a:visited { color: var(--color-primary); }
-a:hover { color: var(--color-primary-lighter); }
+a:link, :visited {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+a:hover {
+    color: var(--color-primary-lighter);
+    text-decoration: underline;
+}
 a:link:active, :visited:active { color: var(--color-primary-darker); }
+
+/* Style external links */
+a[href^="http"]::after {
+    content: "↗";
+    display: inline-block;
+    line-height: 1;
+    vertical-align: text-top;
+}
 
 .content {
     margin: 20px;
