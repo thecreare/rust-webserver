@@ -48,7 +48,7 @@ I use Linux (specifically Manjaro, I've also used Grml, Ubuntu, and Rasbian)
 
 Helped create [Drive to work](projects/drive-to-work) in 96 hours, a fast paced driving game for the [2024 Roblox Developer Challenge](https://devforum.roblox.com/t/roblox-developer-challenge-2024/2779970). The theme was Unexpected Development and the game required competitively navigating multiple procedurally generated roadways while avoiding random *Unexpected Developments* along the way. I primarily contributed constraint based cars and the disasters
 
-Helped create [LOOP](projects/loop) and [won 2nd place](https://devforum.roblox.com/t/roblox-inspire-2024-challenge/3104238#most-creative-game-concept-3) for *Most Creative Game Concept*
+Helped create [LOOP](projects/loop) and [won 2nd place](https://devforum.roblox.com/t/roblox-inspire-2024-challenge/3104238/559) for *Most Creative Game Concept*
 
 And some other gamejams I am yet to write much about
 
